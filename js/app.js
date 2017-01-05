@@ -27,6 +27,9 @@ pausemic.volume=1.0;
 
 var keyStatus=false;
 
+//一组抽取多少个
+var chooseCount = 5;
+
 $("document").ready(function(){
     
     //初始化皮肤
@@ -82,7 +85,9 @@ $("document").ready(function(){
     //回显设定item宽高
 	$("#itemk").attr("placeholder",$(".i1").css("width"));
 	$("#itemg").attr("placeholder",$(".i1").css("height"));
+	$("#count-round").attr("placeholder",localStorage.getItem("count-round"));
 	
+	chooseCount = localStorage.getItem("count-round");
 	//初始化排序信息
 	$(".ss li").each(function(idx,item){
 		$(".i"+$(item).attr("data-number")).addClass("ignore");
@@ -156,7 +161,7 @@ $("document").ready(function(){
 			//如果项目出于运行状态
 			if(!isRun){
 				//取得当前选中号码
-				var it = $(".item.active").text();
+				// var it = $(".item.active").text();
 				//停止跑马灯
 				runingmic.pause();
 				//Math.floor($(".sequence li").size()/ts)
@@ -166,65 +171,19 @@ $("document").ready(function(){
 				pausemic.play();
 
 				//中奖号处理
-				var it=Number(it);
-                var r;
-                var n='很遗憾，什么都没抽中';
-                var j1='一等奖：蒂爵公司提供饰品一件（价值3000元）';
-                var j2='二等奖：蒂爵公司提供饰品一件（价值1000元）';
-                var j3='三等奖：U盘一件';
-                var j4='四等奖：公仔一件';
-                switch(it){
-                    case 28: 
-                        r=j1;
-                        break;
-                    case 35:
-                    case 75:
-                    case 93: 
-                        r=j2;
-                        break;
-                    case 36:
-                    case 23:
-                    case 78:
-                    case 25:
-                    case 73:
-                    case 88:
-                    case 44:
-                    case 90:
-                    case 22:
-                    case 98: 
-                        r=j3;
-                        break;
-                    case 4:
-                    case 8:
-                    case 12:
-                    case 45:
-                    case 76:
-                    case 83:
-                    case 87:
-                    case 24:
-                    case 99:
-                    case 110:
-                    case 120:
-                    case 85:
-                    case 87:
-                    case 2:
-                    case 5:
-                    case 9:
-                    case 13:
-                    case 111:
-                    case 77:
-                    case 20: 
-                        r=j4;
-                        break;
-                    default:
-                        r=n;
-                }
-                $('.ss ol').append('<li data-number='+it+'>'+it+"号："+r+'；</li>');
-                if(r==n){
-                    r='<h3>'+r+'！</h3>';
-                }else{
-                    r='<h2>恭喜您，抽得'+r+'！</h2>';
-                }
+				
+				var rewardList = "";
+				var r="";
+				$('.ss ol').append('<h3>抽取'+chooseCount+"个" + '</h3>');			
+				$(".item.active").each(
+					function()
+					{
+						var id = $(this).text();
+						$('.ss ol').append('<p>'+id+"号" + '</p>');						
+						r +='<h3><font color="red">'+id+'</font></h3>';
+					}
+					);
+
                 var dd = dialog({
                         title: '抽奖结果',
                         content: r,
@@ -267,6 +226,9 @@ $("document").ready(function(){
 		   		if($("#itemg").val()){
 		    		localStorage.setItem("itemg",$("#itemg").val());
 		    	}
+				if($("#count-round").val()){
+		    		localStorage.setItem("count-round",$("#count-round").val());
+		    	}
 		    	localStorage.setItem("title",$("#title").val());
 		    	localStorage.setItem("ms",$("input[name=ms]:checked").val());
 		    	localStorage.setItem("pf",$("input[name=pf]:checked").val());
@@ -293,22 +255,51 @@ $("document").ready(function(){
 	});
 });
 //程序开始入口
+
+function IsExist(element,array)
+{
+	for(var i = 0; i < array.length; ++i)
+	{
+		if(array[i] == element)
+			return true;
+	}
+	return false;
+}
+
 function startApp(){
 	//开始播放跑马灯音效
-	runingmic.play();
+	runingmic.play(); 
  	//产生随机数临时变量
 	var rand =0
 	//存储上一次随机数的临时变量
 	var prenum;
 	tx=setInterval(function(){
 	    if(isRun){
-	    	while(true){
-				rand=Math.floor(Math.random() * ( $("div.item:not(.ignore)").size()));
-			 	if(rand ==0 || rand!=prenum){break;}
-			}
-			prenum=rand;
-			$(".item.active").removeClass("active");
-			$("div.item:not(.ignore):not(.active)").eq(rand).addClass("active");
+
+			$(".item.active").removeClass("active");	
+			var rewards = new Array();
+			for(var i = 0; i < chooseCount; ++i)
+			{
+											
+				while(true)
+				{
+					if($("div.item:not(.ignore)").size() < chooseCount )
+						break;
+					rand=Math.floor(Math.random() * ( $("div.item:not(.ignore)").size()));
+					if(!IsExist(rand,rewards))
+					{
+						rewards.push(rand);				
+						break;
+					}					
+				}				
+			}	
+			
+			for(var i = 0; i < rewards.length; ++i)
+			{
+				var x = rewards[i];
+				$("div.item:not(.ignore)").eq(x).addClass("active");			 					    	
+			}			
+			//prenum=rand;			
 		}
 	},pl);
 	runtx = setInterval(function(){runingmic.currentTime = 0;},7000);
