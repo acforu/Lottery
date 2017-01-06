@@ -99,6 +99,11 @@ $("document").ready(function(){
 	});
 	//全局键盘事件监听
 	$("body").keydown(function(e){
+		if($(".items").is(":hidden"))
+		{
+			return;
+		}
+
 		if(isStart){
 			if(!keyStatus){
 			keyStatus=true;
@@ -205,6 +210,10 @@ $("document").ready(function(){
 		e.preventDefault();
 	});
 	
+	$("a.switch").click(function(){
+		$(".items").toggle();
+		$(".slot-machine").toggle();
+	});
 	//打开高级设置窗口	 
 	$("a.config").click(function(){
 		pause=true;
@@ -253,6 +262,9 @@ $("document").ready(function(){
 		}
 		
 	});
+
+	$(".items").show();
+	$(".slot-machine").hide();
 });
 //程序开始入口
 
