@@ -1,4 +1,4 @@
-body{background:#ccc;padding:5px;overflow-y:hidden;overflow-x:hidden;}
+/*body{background:#ccc;padding:5px;overflow-y:hidden;overflow-x:hidden;}*/
 #bodybg{position:fixed;width:100%;height:100%$;left:0px;top:0px;z-index:-1;}
 #bodybg .stretch{width:100%;height:100%;}
 div.top{font-family:'\5FAE\8F6F\96C5\9ED1';width:100%;height:80px;text-align:center;line-height:80px;font-size:30px;}
@@ -8,7 +8,7 @@ div.menu{font-family:'\5FAE\8F6F\96C5\9ED1';padding:10px 20px 10px 0;width:300px
 .sequence li{font-size:30px;margin-bottom:8px;}
 div.help{padding-top:8px;width:100%;}
 div.items{float:left;padding:15px;padding-left:35px;width:70%;font-family:'\5FAE\8F6F\96C5\9ED1';}
-div.item{margin-bottom:8px;margin-left:8px;float:left;vertical-align:middle;font-size:20px;text-align:center;}
+div.item{margin-bottom:4px;margin-left:4px;float:left;vertical-align:middle;font-size:16px;text-align:center;}
 .model{width:300px;height:350px;text-align: left;font-size:12px;vertical-align: middle;color:#666;}
 .model b{display: inline-block;font-weight: 400;width:60px;}
 .model input[type='text']{padding:8px 10px;border:solid 1px #ddd;box-sizing: border-box;width:230px;}

@@ -1,17 +1,6 @@
 var currentIndex = -1;
 
-function numRand() {
-    var x = 9999; //上限
-    var y = 1111; //下限
-    var rand = parseInt(Math.random() * (x - y + 1) + y);
-    return rand;
-}
 
-function reset() {
-    currentIndex = -1;
-    slotState = slotReady;
-    $('.num').css('background-position', '11px 0px');
-}
 
 
 
@@ -24,13 +13,44 @@ var slotState = slotReady;
 var u = 265;
 
 var num_arr;
+var reward_id = 0;
+
+function numRand() {
+    var rand = Math.floor(Math.random() * ($("div.item:not(.ignore)").size()));
+    var ret = $("div.item:not(.ignore)").eq(rand).text();
+    return ret;
+}
+
+function reset() {
+    currentIndex = -1;
+    slotState = slotReady;
+    reward_id = 0;
+    $('.num').css('background-position', '11px 0px');
+}
 
 function RandResult() {
-    var result = numRand();
-    $('#res').text('result = ' + result);
-    num_arr = (result + '').split('').reverse();
+    reward_id = numRand();
+    $('#res').text('result = ' + reward_id);
+    var str = reward_id.toString();
+    while(str.length < 3)
+    {
+        str = "0" + str;
+    }
+    num_arr = (str + '').split('');
+
+    num_arr.reverse();
     $(".num").css('background-position', '11px 0');
     console.log("RandResult", num_arr);
+}
+
+function writeRewardLog(id) {
+    $('.ss ol').append('<h3>抽取1个</h3>');
+    $('.ss ol').append('<p>' + id + "号" + '</p>');
+    $("div.item:not(.ignore)").each(function () {
+        if ($(this).text() == reward_id) {
+            $(this).addClass("ignore");
+        }
+    });
 }
 
 
@@ -74,6 +94,10 @@ function EndSlot() {
             easing: "easeOutCubic",
             complete: function () {
                 slotState = slotReady;
+                if(currentIndex == 2)
+                {
+                    writeRewardLog(reward_id);
+                }
             }
         });
     }, 0);
@@ -81,7 +105,7 @@ function EndSlot() {
 
 
 $(function () {
-
+    // $('.n3').hide();
     $('.btn').click(function () {
         if (slotState == slotReady) {
             if (currentIndex == -1) {
