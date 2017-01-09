@@ -43,15 +43,6 @@ function RandResult() {
     console.log("RandResult", num_arr);
 }
 
-function writeRewardLog(id) {
-    $('.ss ol').append('<h3>抽取1个</h3>');
-    $('.ss ol').append('<p>' + id + "号" + '</p>');
-    $("div.item:not(.ignore)").each(function () {
-        if ($(this).text() == reward_id) {
-            $(this).addClass("ignore");
-        }
-    });
-}
 
 
 function slideNumber(index) {
@@ -96,7 +87,8 @@ function EndSlot() {
                 slotState = slotReady;
                 if(currentIndex == 2)
                 {
-                    writeRewardLog(reward_id);
+					var rewards = [reward_id];
+                    writeRewardLog(rewards);
                 }
             }
         });

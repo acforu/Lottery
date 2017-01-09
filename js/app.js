@@ -183,14 +183,18 @@ $("document").ready(function () {
 
 				var rewardList = "";
 				var r = "";
-				$('.ss ol').append('<h3>抽取' + chooseCount + "个" + '</h3>');
+				var rewards = new Array();
+				// $('.ss ol').append('<h3>抽取' + chooseCount + "个" + '</h3>');
 				$(".item.active").each(
 					function () {
 						var id = $(this).text();
-						$('.ss ol').append('<p>' + id + "号" + '</p>');
+						rewards.push(id);
+						// $('.ss ol').append('<p>' + id + "号" + '</p>');
 						r += '<h3><font color="red">' + id + '</font></h3>';
 					}
 				);
+
+				writeRewardLog(rewards);
 
 				var dd = dialog({
 					title: '抽奖结果',
@@ -198,7 +202,7 @@ $("document").ready(function () {
 					okValue: '确定'
 				});
 				dd.show();
-				localStorage.setItem("sequence", $(".ss").html());
+				// localStorage.setItem("sequence", $(".ss").html());
 				$(".item.active").addClass("ignore");
 				$(".item.active").pulsate({
 					color: zzs, //#98ff98
@@ -260,8 +264,19 @@ $("document").ready(function () {
 		if (inputItemCount == $(this).text()) {
 			$("li[data-number=" + $(this).text() + "]").remove();
 			$(this).removeClass("ignore");
+			$('.ss ol').append('<p>删除中奖号:' + inputItemCount + '</p>');
 			localStorage.setItem("sequence", $(".ss").html());
+		} else {}
 
+	});
+
+	$("body").on("click", ".item:not(.ignore)", function () {
+		var inputItemCount = prompt("请输入点击的号码来进行增加中奖号码（例如“12”）。");
+		if (inputItemCount == $(this).text()) {
+			$("li[data-number=" + $(this).text() + "]").remove();
+			$(this).removeClass("ignore");
+			$('.ss ol').append('<p>删除中奖号:' + inputItemCount + '</p>');
+			localStorage.setItem("sequence", $(".ss").html());
 		} else {}
 
 	});
