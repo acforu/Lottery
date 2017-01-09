@@ -273,10 +273,8 @@ $("document").ready(function () {
 	$("body").on("click", ".item:not(.ignore)", function () {
 		var inputItemCount = prompt("请输入点击的号码来进行增加中奖号码（例如“12”）。");
 		if (inputItemCount == $(this).text()) {
-			$("li[data-number=" + $(this).text() + "]").remove();
-			$(this).removeClass("ignore");
-			$('.ss ol').append('<p>删除中奖号:' + inputItemCount + '</p>');
-			localStorage.setItem("sequence", $(".ss").html());
+			$(this).addClass("ignore");
+			writeSingleRewardLog(inputItemCount);
 		} else {}
 
 	});
