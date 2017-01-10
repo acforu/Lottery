@@ -30,7 +30,7 @@ function reset() {
 
 function RandResult() {
     reward_id = numRand();
-    $('#res').text('result = ' + reward_id);
+    // $('#res').text('result = ' + reward_id);
     var str = reward_id.toString();
     while(str.length < 3)
     {
