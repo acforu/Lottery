@@ -131,7 +131,7 @@ $(function () {
 			return true;
 		}
 
-		if (e.keyCode == 27 ) {
+		if (e.keyCode == 46 ) {
 			reset();
 			return true;
 		}
