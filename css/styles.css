@@ -7,7 +7,7 @@ html, body {
 body {
 	background: url(../images/body_bg.jpg) 0px 0px repeat-x #000;
 }
-.slot-machine{float:left;padding:0px;padding-left:0px;transform:scale(1,1);}
+.slot-machine{padding:0px;padding-left:0px;transform:scale(1,1);}
 .main_bg {
 	background: url(../images/main_bg.jpg) bottom center no-repeat;
 	height:760px;

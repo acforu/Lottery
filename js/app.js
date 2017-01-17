@@ -30,44 +30,76 @@ var keyStatus = false;
 //一组抽取多少个
 var chooseCount = 5;
 
+var model = "desk";//三种
+var ss_model = "desk"; //两种
+
 $("document").ready(function () {
 
 	//初始化皮肤
-	if (localStorage.getItem("pf")) {
-		var pf = localStorage.getItem("pf");
-		dynamicLoading.css("./css/style" + pf + ".css");
-		$("#bodybg img").attr("src", "./images/bodybg" + pf + ".jpg");
-		$("input[name=pf][value=" + pf + "]").attr("checked", true);
-		if (pf != 1) {
-			zzs = "#ba3030";
-		}
+	// if (localStorage.getItem("pf")) {
+	// 	var pf = localStorage.getItem("pf");
+	// 	dynamicLoading.css("./css/style" + pf + ".css");
+	// 	$("#bodybg img").attr("src", "./images/bodybg" + pf + ".jpg");
+	// 	$("input[name=pf][value=" + pf + "]").attr("checked", true);
+	// 	if (pf != 1) {
+	// 		zzs = "#ba3030";
+	// 	}
+	// }
+
+	var pf = "1";
+	dynamicLoading.css("./css/style" + pf + ".css");
+	$("#bodybg img").attr("src", "./images/bodybg" + pf + ".jpg");
+
+	if(localStorage.getItem("model"))
+	{
+		model = localStorage.getItem("model");
+		if(model == "desk")
+			ss_model = "desk";
+		else
+			ss_model = "chair";
 	}
+
 	//初始化标题
-	if (localStorage.getItem("title")) {
-		$("#title").val(localStorage.getItem("title"));
-	}
-	$(".top").text($("#title").val());
+	// if (localStorage.getItem("title")) {
+	// 	$("#title").val(localStorage.getItem("title"));
+	// }
+	// $(".top").text($("#title").val());
 
 	//频率模式本地存储  	 
-	if (localStorage.getItem("ms")) {
-		pl = localStorage.getItem("ms");
-		$("input[name=ms][value=" + pl + "]").attr("checked", true);
-	}
+	// if (localStorage.getItem("ms")) {
+	// 	pl = localStorage.getItem("ms");
+	// 	$("input[name=ms][value=" + pl + "]").attr("checked", true);
+	// }
 	//排名信息本地存储
-	if (localStorage.getItem("sequence")) {
-		var ssHtml = localStorage.getItem("sequence");
-		$(".ss").html(ssHtml);
+	if (localStorage.getItem(ss_model+"-sequence")) {
+		var ssHtml = localStorage.getItem(ss_model+"-sequence");
+		console.log(".ss",ssHtml);
+		if(ssHtml == "undefined")
+		{
+			
+		}
+		else
+		{
+			 $(".ss." + ss_model).html(ssHtml);
+		}
 	}
+
+	if (localStorage.getItem("title")) {
+		var ssHtml = localStorage.getItem("title");
+		$(".top").html(ssHtml);
+	}
+
+	
 
 	//已经取消的输入
 	//var inputItemCount = prompt("请输入参与抽奖人数(请输入数字，输入非数字会按默认人数计算)。");
 
 	//本地排名信息存储
-	if (localStorage.getItem("itemCount")) {
-		itemCount = localStorage.getItem("itemCount");
+	if (localStorage.getItem("personCount")) {
+		itemCount = localStorage.getItem("personCount");
 	}
 	//本地设定回显  	 
-	$("#personCount").val(itemCount);
+	// $("#personCount").val(itemCount);
 
 	//创建item小方格
 	for (var i = 1; i <= itemCount; i++) {
@@ -90,11 +122,11 @@ $("document").ready(function () {
 		chooseCount = localStorage.getItem("count-round");
 	}
 
-	$("#count-round").attr("placeholder", chooseCount);
+	// $("#count-round").attr("placeholder", chooseCount);
 
 	
 	//初始化排序信息
-	$(".ss li").each(function (idx, item) {
+	$(".ss."+ ss_model +" li").each(function (idx, item) {
 		$(".i" + $(item).attr("data-number")).addClass("ignore");
 	});
 
@@ -194,7 +226,13 @@ $("document").ready(function () {
 					}
 				);
 
-				writeRewardLog(rewards);
+				writeRewardLog(rewards,ss_model);
+
+				$(".item.active").addClass("ignore");
+				$(".item.active").pulsate({
+					color: zzs, //#98ff98
+					repeat: 5
+				});
 
 				var dd = dialog({
 					title: '抽奖结果',
@@ -202,12 +240,10 @@ $("document").ready(function () {
 					okValue: '确定'
 				});
 				dd.show();
+
+				console.log("not ignore count",$("div.item:not(.ignore)").size());
 				// localStorage.setItem("sequence", $(".ss").html());
-				$(".item.active").addClass("ignore");
-				$(".item.active").pulsate({
-					color: zzs, //#98ff98
-					repeat: 5
-				});
+			
 			} else {
 				$(".active").removeClass("active");
 				runingmic.play();
@@ -217,70 +253,79 @@ $("document").ready(function () {
 		e.preventDefault();
 	});
 
-	$("a.switch").click(function () {
-		$(".items").toggle();
-		$(".slot-machine").toggle();
-	});
+	// $("a.switch").click(function () {
+	// 	$(".items").toggle();
+	// 	$(".slot-machine").toggle();
+	// });
 	//打开高级设置窗口	 
-	$("a.config").click(function () {
-		pause = true;
-		runingmic.pause();
-		var d = dialog({
-			title: '抽奖参数设定',
-			content: $(".model"),
-			okValue: '确定',
-			ok: function () {
-				if ($("#reset:checked").val() && confirm("点击确定将清空抽奖结果。")) {
-					localStorage.removeItem("sequence");
-				}
-				if ($("#personCount").val()) {
-					localStorage.setItem("itemCount", $("#personCount").val());
-				}
-				if ($("#itemk").val()) {
-					localStorage.setItem("itemk", $("#itemk").val());
-				}
-				if ($("#itemg").val()) {
-					localStorage.setItem("itemg", $("#itemg").val());
-				}
-				if ($("#count-round").val()) {
-					localStorage.setItem("count-round", $("#count-round").val());
-				}
-				localStorage.setItem("title", $("#title").val());
-				localStorage.setItem("ms", $("input[name=ms]:checked").val());
-				localStorage.setItem("pf", $("input[name=pf]:checked").val());
+	// $("a.config").click(function () {
+	// 	pause = true;
+	// 	runingmic.pause();
+	// 	var d = dialog({
+	// 		title: '抽奖参数设定',
+	// 		content: $(".model"),
+	// 		okValue: '确定',
+	// 		ok: function () {
+	// 			if ($("#reset:checked").val() && confirm("点击确定将清空抽奖结果。")) {
+	// 				localStorage.removeItem("sequence");
+	// 			}
+	// 			if ($("#personCount").val()) {
+	// 				localStorage.setItem("itemCount", $("#personCount").val());
+	// 			}
+	// 			if ($("#itemk").val()) {
+	// 				localStorage.setItem("itemk", $("#itemk").val());
+	// 			}
+	// 			if ($("#itemg").val()) {
+	// 				localStorage.setItem("itemg", $("#itemg").val());
+	// 			}
+	// 			if ($("#count-round").val()) {
+	// 				localStorage.setItem("count-round", $("#count-round").val());
+	// 			}
+	// 			localStorage.setItem("title", $("#title").val());
+	// 			localStorage.setItem("ms", $("input[name=ms]:checked").val());
+	// 			localStorage.setItem("pf", $("input[name=pf]:checked").val());
 
-				window.location.reload();
-			},
-			onclose: function () {
-				pause = false;
-			}
-		});
-		d.show();
-	});
+	// 			window.location.reload();
+	// 		},
+	// 		onclose: function () {
+	// 			pause = false;
+	// 		}
+	// 	});
+	// 	d.show();
+	// });
 
 	//清除错误中奖号
-	$("body").on("click", ".item.ignore", function () {
-		var inputItemCount = prompt("请输入点击的号码来进行删除中奖号码（例如“12”）。");
-		if (inputItemCount == $(this).text()) {
-			$("li[data-number=" + $(this).text() + "]").remove();
-			$(this).removeClass("ignore");
-			$('.ss ol').append('<p>删除中奖号:' + inputItemCount + '</p>');
-			localStorage.setItem("sequence", $(".ss").html());
-		} else {}
+	// $("body").on("click", ".item.ignore", function () {
+	// 	var inputItemCount = prompt("请输入点击的号码来进行删除中奖号码（例如“12”）。");
+	// 	if (inputItemCount == $(this).text()) {
+	// 		$("li[data-number=" + $(this).text() + "]").remove();
+	// 		$(this).removeClass("ignore");
+	// 		$('.ss ol').append('<p>删除中奖号:' + inputItemCount + '</p>');
+	// 		localStorage.setItem("sequence", $(".ss").html());
+	// 	} else {}
 
-	});
+	// });
 
-	$("body").on("click", ".item:not(.ignore)", function () {
-		var inputItemCount = prompt("请输入点击的号码来进行增加中奖号码（例如“12”）。");
-		if (inputItemCount == $(this).text()) {
-			$(this).addClass("ignore");
-			writeSingleRewardLog(inputItemCount);
-		} else {}
+	// $("body").on("click", ".item:not(.ignore)", function () {
+	// 	var inputItemCount = prompt("请输入点击的号码来进行增加中奖号码（例如“12”）。");
+	// 	if (inputItemCount == $(this).text()) {
+	// 		$(this).addClass("ignore");
+	// 		writeSingleRewardLog(inputItemCount);
+	// 	} else {}
 
-	});
+	// });
 
-	$(".items").show();
-	$(".slot-machine").hide();
+	if(model == "slot-machine")
+	{
+		$(".items").hide();
+		$(".slot-machine").show();
+	}
+	else
+	{
+		$(".items").show();
+		$(".slot-machine").hide();
+	}
+	
 
 });
 //程序开始入口
@@ -330,18 +375,18 @@ function startApp() {
 	}, 7000);
 }
 
-function showReadme() {
-	var d = dialog({
-		title: '帮助信息',
-		content: $(".readme"),
-		width: '400px',
-		okValue: '关闭',
-		ok: function () {},
-		onclose: function () {
-			pause = false;
-		}
-	}).show();
-}
+// function showReadme() {
+// 	var d = dialog({
+// 		title: '帮助信息',
+// 		content: $(".readme"),
+// 		width: '400px',
+// 		okValue: '关闭',
+// 		ok: function () {},
+// 		onclose: function () {
+// 			pause = false;
+// 		}
+// 	}).show();
+// }
 
 var dynamicLoading = {
 	css: function (path) {

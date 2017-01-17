@@ -1,17 +1,18 @@
-function writeRewardLog(ids) {
+function writeRewardLog(ids,storage_key) {
 	// $('.ss ol').append('<h3>抽取' + ids.length + '个</h3>');
 	for (var i = 0; i < ids.length; ++i) {
 		var id = ids[i];
-		// $('.ss ol').append('<p>' + id + "号" + '</p>');
-		$('.ss ol').append("<li data-number='" + id + "'>" + id + '</li>');
+		// $('.ss.'+storage_key +' ol ').append('<p>' + id + "号" + '</p>');
+		$('.ss.'+storage_key +' ol ').append("<li data-number='" + id + "'>" + id + '</li>');
+		
 		$("div.item:not(.ignore)").each(function () {
 			if ($(this).text() == id) {
 				$(this).addClass("ignore");
 			}
 		});
 	}
-
-	localStorage.setItem("sequence", $(".ss").html());
+	console.log("writeRewardLog",ids.length,storage_key+ "-sequence",$(".ss."+storage_key).html())
+	localStorage.setItem(storage_key+ "-sequence", $(".ss."+ storage_key).html());
 }
 
 function writeSingleRewardLog(id)

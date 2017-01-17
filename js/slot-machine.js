@@ -17,6 +17,7 @@ var reward_id = 0;
 
 function numRand() {
     var rand = Math.floor(Math.random() * ($("div.item:not(.ignore)").size()));
+	console.log("numRand",$("div.item:not(.ignore)").size());
     var ret = $("div.item:not(.ignore)").eq(rand).text();
     return ret;
 }
@@ -88,7 +89,7 @@ function EndSlot() {
                 if(currentIndex == 2)
                 {
 					var rewards = [reward_id];
-                    writeRewardLog(rewards);
+                    writeRewardLog(rewards,"chair");
                 }
             }
         });
@@ -96,10 +97,9 @@ function EndSlot() {
 }
 
 
-$(function () {
-    // $('.n3').hide();
-    $('.btn').click(function () {
-        if (slotState == slotReady) {
+function hit()
+{
+ 	if (slotState == slotReady) {
             if (currentIndex == -1) {
                 RandResult();
             }
@@ -113,9 +113,27 @@ $(function () {
         } else if (slotState == slotRunning) {
             EndSlot();
         }
-    });
+}
 
-    $('.reset_btn').click(function () {
-        reset();
+$(function () {
+    // $('.n3').hide();
+
+	console.log("not ignore count",$("div.item:not(.ignore)").size());
+
+		$("body").keydown(function (e) {
+		if(localStorage.getItem("model") !="slot-machine")
+				return;
+
+		
+
+		if (e.keyCode == 32 ) {
+			hit();
+			return true;
+		}
+
+		if (e.keyCode == 27 ) {
+			reset();
+			return true;
+		}
     });
 });

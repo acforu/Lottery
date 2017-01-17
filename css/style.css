@@ -7,7 +7,7 @@ div.menu{font-family:'\5FAE\8F6F\96C5\9ED1';padding:10px 20px 10px 0;width:300px
 .sequence{width:220px;height:95%;padding-left:60px;margin-right:20px;overflow-y:auto;}
 .sequence li{font-size:30px;margin-bottom:8px;}
 div.help{padding-top:8px;width:100%;}
-div.items{float:left;padding:15px;padding-left:35px;width:70%;font-family:'\5FAE\8F6F\96C5\9ED1';}
+div.items{margin: 0 auto ; padding:15px;width:70%;font-family:'\5FAE\8F6F\96C5\9ED1';}
 div.item{margin-bottom:4px;margin-left:4px;float:left;vertical-align:middle;font-size:16px;text-align:center;}
 .model{width:300px;height:350px;text-align: left;font-size:12px;vertical-align: middle;color:#666;}
 .model b{display: inline-block;font-weight: 400;width:60px;}
