@@ -46,9 +46,9 @@ $("document").ready(function () {
 	// 	}
 	// }
 
-	var pf = "1";
-	dynamicLoading.css("./css/style" + pf + ".css");
-	$("#bodybg img").attr("src", "./images/bodybg" + pf + ".jpg");
+	// var pf = "1";
+	// dynamicLoading.css("./css/style" + pf + ".css");
+	// $("#bodybg img").attr("src", "./images/bodybg" + pf + ".jpg");
 
 	if(localStorage.getItem("model"))
 	{
@@ -151,17 +151,20 @@ $("document").ready(function () {
 			return true;
 		}
 		//按F1弹出帮助窗口
-		if (e.keyCode == 112) {
-			e.preventDefault();
-			showReadme();
-			return false;
-		}
+		// if (e.keyCode == 112) {
+		// 	e.preventDefault();
+		// 	showReadme();
+		// 	return false;
+		// }
+
+
 		//ESC案件呼出隐藏菜单
 		if (e.keyCode == 27) {
-			if ($(".help:hidden").size() > 0)
-				$(".help").show();
-			else
-				$(".help").hide();
+			// if ($(".help:hidden").size() > 0)
+			// 	$(".help").show();
+			// else
+			// 	$(".help").hide();
+			$("#myModal").hide();
 
 			return false;
 		}
@@ -192,7 +195,7 @@ $("document").ready(function () {
 			if ($("div.item:not(.ignore)").size() == 0) {
 				clearInterval(tx);
 				clearInterval(runtx);
-				runingmic.puase();
+				runingmic.pause();
 
 				alert("抽奖已经全部结束。");
 				return false;
@@ -222,7 +225,7 @@ $("document").ready(function () {
 						var id = $(this).text();
 						rewards.push(id);
 						// $('.ss ol').append('<p>' + id + "号" + '</p>');
-						r += '<h3><font color="red">' + id + '</font></h3>';
+						r += '<h3><font color="red"><p>' + id + '</p></font></h3>';
 					}
 				);
 
@@ -234,13 +237,27 @@ $("document").ready(function () {
 					repeat: 5
 				});
 
-				var dd = dialog({
-					title: '抽奖结果',
-					content: r,
-					okValue: '确定'
-				});
-				dd.show();
+				// var dd = dialog({
+				// 	title: '抽奖结果',
+				// 	content: r,
+				// 	okValue: '确定'
+				// });
+				// dd.show();
 
+				// var modal = document.getElementById('myModal');
+				// modal.style.display = "block";
+				// $("myModal").style.display = "block";
+				$("#myModal").css("display", "block");
+				$("#reward-result").html("<p>"+ r +"</p>");
+				// $("#img01").src = "./images/window.png";
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+// var captionText = document.getElementById("caption");
+//     captionText.innerHTML = this.alt;
+
+
+
+	
 				console.log("not ignore count",$("div.item:not(.ignore)").size());
 				// localStorage.setItem("sequence", $(".ss").html());
 			
