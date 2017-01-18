@@ -10,10 +10,11 @@ var slotTryStop = 2;
 
 var slotState = slotReady;
 
-var u = 265;
+var u = 347.2;
 
 var num_arr;
 var reward_id = 0;
+var init_background_pos_x = "50%";
 
 function numRand() {
     var rand = Math.floor(Math.random() * ($("div.item:not(.ignore)").size()));
@@ -26,7 +27,7 @@ function reset() {
     currentIndex = -1;
     slotState = slotReady;
     reward_id = 0;
-    $('.num').css('background-position', '11px 0px');
+    $('.num').css('background-position', init_background_pos_x + '0px');
 }
 
 function RandResult() {
@@ -40,7 +41,7 @@ function RandResult() {
     num_arr = (str + '').split('');
 
     num_arr.reverse();
-    $(".num").css('background-position', '11px 0');
+    $(".num").css('background-position', init_background_pos_x + ' 0px');
     console.log("RandResult", num_arr);
 }
 
@@ -48,7 +49,7 @@ function RandResult() {
 
 function slideNumber(index) {
     $('.n' + index).animate({
-        backgroundPosition: '11px ' + 800000 + 'px'
+        backgroundPosition: init_background_pos_x +  ' 800000px'
     }, {
         //duration: 6000+index*3000,
         duration: 300000,
@@ -79,7 +80,7 @@ function EndSlot() {
     console.log("targetPos" + targetPos);
     setTimeout(function () {
         $(".n" + currentIndex).animate({
-            backgroundPosition: '11px ' + targetPos + 'px'
+            backgroundPosition: init_background_pos_x + " " + targetPos + 'px'
         }, {
             //duration: 6000+index*3000,
             duration: 3000,
@@ -118,6 +119,9 @@ function hit()
 $(function () {
     // $('.n3').hide();
 
+	var backgroundPosition = $('.num').css('background-position').split(" ");
+    init_background_pos_x = backgroundPosition[0];
+	// console.log("init_background_pos_x",init_background_pos_x)
 	console.log("not ignore count",$("div.item:not(.ignore)").size());
 
 		$("body").keydown(function (e) {

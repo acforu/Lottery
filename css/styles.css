@@ -9,12 +9,19 @@ body {
 }
 .slot-machine{padding:0px;padding-left:0px;transform:scale(1,1);}
 .main_bg {
-	background: url(../images/main_bg.jpg) bottom center no-repeat;
-	height:760px;
+	background: url(../images/grid.png)  center no-repeat;
+	width: 1060px;
+	height: 379px;
+	position: absolute;
+	margin: auto;
+	left: 0;
+	right: 0;
+	top:100px;
+
 }
-.main {
-	width: 1000px;
-	height: 760px;
+/*.main {
+	width: 1060px;
+	height: 379px;
 	position: relative;
 	margin: 0 auto;
 }
@@ -27,26 +34,48 @@ body {
 	top: 100px;
 	margin-left: -370px;
 	z-index: 9;
-}
+}*/
 .num_box {
-	height: 450px;
-	width: 750px;
+	/*height: 450px;
+	width: 750px;*/
 	position: absolute;
-	left: 50%;
+	width: 1060px;
+	height: 379px;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	/*left: 50%;
 	top: 100px;
 	margin-left: -370px;
 	z-index: 8;
 	overflow: hidden;
-	text-align: center;
+	text-align: center;*/
 }
 .num {
-	background: url(../images/num.png) top center repeat-y;
-	width: 181px;
-	height: 265px;
-	float: right;
-	margin-right: 6px;
+	background: url(../images/number.png) top center repeat-y;
+	width: 256px;
+	height: 340px;
+	/*float: right;*/
+	/*margin-right: 6px;*/
+	/*margin-left: 70px;*/
+	/*margin-right: 70px;*/
 }
-.btn {
+.num.n2{
+	position: absolute;
+    left: 14px;
+    top: 13px;
+}
+.num.n1{
+	position: absolute;
+    left: 401px;
+    top: 13px;
+}
+.num.n0{
+	position: absolute;
+    left: 788px;
+    top: 13px;
+}
+/*.btn {
 	background: url(../images/btn_start.png) 0px 0px no-repeat;
 	width: 264px;
 	height: 89px;
@@ -67,7 +96,7 @@ body {
 	margin-left: -132px;
 	cursor: pointer;
 	clear: both;
-}
+}*/
 .result {
 	text-align: center;
 	color: #ffffff;
