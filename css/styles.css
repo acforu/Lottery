@@ -1,8 +1,8 @@
 html, body {
 	margin: 0;
 	padding: 0;
-	/*overflow: hidden;*/
-	overflow-y:scroll;
+	overflow: hidden;
+	/*overflow-y:scroll;*/
 }
 body {
 	background: url(../images/body_bg.jpg) 0px 0px repeat-x #000;
