@@ -140,6 +140,9 @@ $("document").ready(function () {
 			return;
 		}
 
+
+
+
 		if (isStart) {
 			if (!keyStatus) {
 				keyStatus = true;
@@ -169,19 +172,25 @@ $("document").ready(function () {
 			return false;
 		}
 
-		if (e.keyCode == 37) {
-			$(".prev").click();
-			return false;
-		}
-		if (e.keyCode == 39) {
-			$(".next").click();
-			return false;
-		}
+		// if (e.keyCode == 37) {
+		// 	$(".prev").click();
+		// 	return false;
+		// }
+		// if (e.keyCode == 39) {
+		// 	$(".next").click();
+		// 	return false;
+		// }
+		
 		//当程序出于暂停状态
 		if (pause) {
 			//以下按键有效 数字键 0-9 和 小键盘 0-9
 			return true;
 		}
+
+		if(!$("#myModal").is(":hidden")){
+			return;
+		}
+
 		//存在未中奖用户切程序出于未开始运行状态执行开始方法
 		if ((e.keyCode == 32 || e.keyCode == 65) && $("div.item:not(.ignore)").size() != 0 && !isStart) {
 			isStart = !isStart;
