@@ -20,10 +20,10 @@ var isStart = false;
 var zzs = "#98ff98";
 //跑马灯音效
 var runingmic = document.getElementById("runingmic");
-runingmic.volume = 0.5;
+runingmic.volume = 0.0;
 //中奖音效
 var pausemic = document.getElementById("pausemic");
-pausemic.volume = 1.0;
+pausemic.volume = 0.0;
 
 var keyStatus = false;
 
@@ -180,7 +180,7 @@ $("document").ready(function () {
 		// 	$(".next").click();
 		// 	return false;
 		// }
-		
+
 		//当程序出于暂停状态
 		if (pause) {
 			//以下按键有效 数字键 0-9 和 小键盘 0-9
